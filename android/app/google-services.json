@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125868405636",
+    "project_id": "pets-785a0",
+    "storage_bucket": "pets-785a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125868405636:android:b9cd67f385174f96a7a3d1",
+        "android_client_info": {
+          "package_name": "com.example.pets_graduation_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwt-bCWWz8rldAYcPETUw9XXh7kKAlHY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
