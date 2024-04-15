@@ -37,6 +37,7 @@ class OrdersScreen extends StatelessWidget {
                           children: [
                             Text("Total = ${item["total"]}"),
                             const Text("Order Details : "),
+                            const Divider(),
                             for (var e in item["items"])
                               Row(
                                 children: [
@@ -50,6 +51,8 @@ class OrdersScreen extends StatelessWidget {
                                     children: [
                                       Text("name : ${e["name"]}"),
                                       Text("category : ${e["category"]}"),
+                                      Text("Price : ${e["price"]}"),
+                                      Text("Quantity : ${e["quantity"]}"),
                                       const SizedBox(height: 10),
                                     ],
                                   ),

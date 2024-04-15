@@ -68,15 +68,12 @@ class PetsCubit extends Cubit<PetsState> {
   void getPets() async {
     emit(GetPetsLoadingState());
     try {
-      var response = await firestore
-          .collection("pets")
-          .where(
-            "ownerId",
-            isEqualTo: SharedHelper.getUserId(),
-          )
-          .get();
+      var response = await firestore.collection("pets").get();
 
       myPets = response.docs
+          .where((element) =>
+              element["ownerId"] == SharedHelper.getUserId() ||
+              element["AdopterId"] == SharedHelper.getUserId())
           .map((e) => {
                 "id": e.id,
                 "category": e.data()["category"],
@@ -95,6 +92,30 @@ class PetsCubit extends Cubit<PetsState> {
     } catch (e) {
       print(e.toString());
       emit(GetPetsErrorState());
+    }
+  }
+
+  void editPet(Map pet) async {
+    emit(EditPetLoadingState());
+    try {
+      await firestore.collection("pets").doc(pet["id"]).update({
+        "category": pet["category"],
+        "age": pet["age"],
+        "desc": pet["desc"],
+        "name": pet["name"],
+        "gender": pet["gender"],
+        "picture": pet["picture"],
+        "ownerId": pet["ownerId"],
+        "AdopterId": pet["AdopterId"],
+        "enabled": pet["enabled"],
+        "isAdopted": pet["isAdopted"]
+      });
+      emit(EditPetSuccessState());
+
+      getPets();
+    } catch (e) {
+      print(e.toString());
+      emit(EditPetErrorState());
     }
   }
 }

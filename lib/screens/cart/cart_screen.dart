@@ -5,9 +5,14 @@ import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
 
 import 'make_order_screen.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   CartScreen({super.key});
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   List<Map> products = SharedHelper.getCart();
 
   final firestore = FirebaseFirestore.instance;
@@ -25,7 +30,8 @@ class CartScreen extends StatelessWidget {
               try {
                 double total = 0;
                 SharedHelper.getCart().forEach((element) {
-                  total += double.parse(element["price"].toString());
+                  total += double.parse(element["price"].toString()) *
+                      int.parse(element["quantity"].toString());
                 });
 
                 firestore.collection("orders").add({
@@ -59,25 +65,55 @@ class CartScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              products[index]["picture"],
-                            ),
-                            radius: 40,
-                          ),
-                          const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              Text(
-                                products[index]["name"],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  products[index]["picture"],
                                 ),
+                                radius: 40,
                               ),
-                              Text(products[index]["price"].toString()),
+                              const SizedBox(width: 20),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    products[index]["name"],
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(products[index]["price"].toString()),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  SharedHelper.addQuantity(
+                                      products[index], context);
+                                  products = SharedHelper.getCart();
+
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.add),
+                              ),
+                              Text("${products[index]["quantity"]}"),
+                              IconButton(
+                                onPressed: () {
+                                  SharedHelper.mineseQuantity(
+                                      products[index], context);
+                                  products = SharedHelper.getCart();
+
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.minimize),
+                              )
                             ],
                           )
                         ],

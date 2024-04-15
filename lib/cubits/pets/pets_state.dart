@@ -30,3 +30,10 @@ class GetCategoriesSuccessState extends PetsState {}
 class GetCategoriesErrorState extends PetsState {}
 
 //! ----------------------------------------------------------
+class EditPetLoadingState extends PetsState {}
+
+class EditPetSuccessState extends PetsState {}
+
+class EditPetErrorState extends PetsState {}
+
+//! ----------------------------------------------------------

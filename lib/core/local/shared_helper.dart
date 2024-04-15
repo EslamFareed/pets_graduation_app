@@ -40,6 +40,58 @@ class SharedHelper {
     return data.map((e) => jsonDecode(e) as Map).toList();
   }
 
+  static Future<void> addQuantity(Map product, BuildContext context) async {
+    List<String> data = prefs.getStringList(SharedKeys.cart.name) ?? [];
+
+    var products = data.map((e) => jsonDecode(e) as Map).toList();
+    products[products
+            .indexWhere((element) => element["name"] == product["name"])]
+        ["quantity"] = int.parse(products[products.indexWhere(
+                (element) => element["name"] == product["name"])]["quantity"]
+            .toString()) +
+        1;
+
+    data = products.map((e) => jsonEncode(e)).toList();
+
+    await prefs.setStringList(SharedKeys.cart.name, data).then((value) {
+      ShowMessage.showMessage(
+          context, "${product["name"]} increased quantity to Cart");
+    });
+  }
+
+  static Future<void> mineseQuantity(Map product, BuildContext context) async {
+    List<String> data = prefs.getStringList(SharedKeys.cart.name) ?? [];
+
+    var products = data.map((e) => jsonDecode(e) as Map).toList();
+    if (int.parse(products[products.indexWhere(
+                (element) => element["name"] == product["name"])]["quantity"]
+            .toString()) ==
+        1) {
+      products.removeAt(
+          products.indexWhere((element) => element["name"] == product["name"]));
+
+      data = products.map((e) => jsonEncode(e)).toList();
+      await prefs.setStringList(SharedKeys.cart.name, data).then((value) {
+        ShowMessage.showMessage(
+            context, "${product["name"]} removed from cart");
+      });
+    } else {
+      products[products
+              .indexWhere((element) => element["name"] == product["name"])]
+          ["quantity"] = int.parse(products[products.indexWhere(
+                  (element) => element["name"] == product["name"])]["quantity"]
+              .toString()) -
+          1;
+
+      data = products.map((e) => jsonEncode(e)).toList();
+
+      await prefs.setStringList(SharedKeys.cart.name, data).then((value) {
+        ShowMessage.showMessage(
+            context, "${product["name"]} decreased quantity to Cart");
+      });
+    }
+  }
+
   static Future<void> setProductToCart(
       Map product, BuildContext context) async {
     List<String> data = prefs.getStringList(SharedKeys.cart.name) ?? [];
@@ -48,13 +100,25 @@ class SharedHelper {
     if (products
         .where((element) => element["name"] == product["name"])
         .isEmpty) {
+      product["quantity"] = 1;
       data.add(jsonEncode(product));
       await prefs.setStringList(SharedKeys.cart.name, data).then((value) {
         ShowMessage.showMessage(context, "${product["name"]} added to Cart");
       });
     } else {
-      ShowMessage.showMessage(
-          context, "${product["name"]} already added to Cart");
+      products[products
+              .indexWhere((element) => element["name"] == product["name"])]
+          ["quantity"] = int.parse(products[products.indexWhere(
+                  (element) => element["name"] == product["name"])]["quantity"]
+              .toString()) +
+          1;
+
+      data = products.map((e) => jsonEncode(e)).toList();
+
+      await prefs.setStringList(SharedKeys.cart.name, data).then((value) {
+        ShowMessage.showMessage(
+            context, "${product["name"]} increased quantity to Cart");
+      });
     }
   }
 }

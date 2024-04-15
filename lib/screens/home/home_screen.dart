@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
 import 'package:pets_graduation_app/cubits/main/main_cubit.dart';
 import 'package:pets_graduation_app/cubits/user/user_cubit.dart';
+import 'package:pets_graduation_app/screens/adoption/adoption_screen.dart';
+import 'package:pets_graduation_app/screens/diagnose/diagnose_screen.dart';
 import 'package:pets_graduation_app/screens/pharmacies/pharmacies_screen.dart';
 
 import '../../core/local/shared_helper.dart';
@@ -75,11 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 switch (index) {
                                   case 0:
+                                    NavigationHelper.goTo(
+                                        context, DiagnoseScreen());
+
                                     break;
                                   case 1:
                                     MainCubit.get(context).changeScreen(1);
                                     break;
                                   case 2:
+                                    NavigationHelper.goTo(
+                                        context, AdoptionScreen());
                                     break;
                                   case 3:
                                     NavigationHelper.goTo(

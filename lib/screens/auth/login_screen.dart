@@ -7,7 +7,7 @@ import 'package:pets_graduation_app/screens/auth/create_account_screen.dart';
 import '../main/main_layout.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -19,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   bool isLoading = false;
+
+  bool hidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: TextFormField(
                 controller: passwordController,
+                obscureText: hidden,
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        hidden = !hidden;
+                      });
+                    },
+                    icon:
+                        Icon(hidden ? Icons.visibility_off : Icons.visibility),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide.none,

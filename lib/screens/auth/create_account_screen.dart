@@ -26,6 +26,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool isLoading = false;
+  bool hidden = true;
+  bool hiddenConfirm = true;
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +179,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextFormField(
+                          obscureText: hidden,
                           controller: passwordController,
                           decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidden = !hidden;
+                                });
+                              },
+                              icon: Icon(hidden
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none,
@@ -204,8 +217,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextFormField(
+                          obscureText: hiddenConfirm,
                           controller: confirmPasswordController,
                           decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hiddenConfirm = !hiddenConfirm;
+                                });
+                              },
+                              icon: Icon(hiddenConfirm
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none,

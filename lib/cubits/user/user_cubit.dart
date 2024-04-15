@@ -52,7 +52,17 @@ class UserCubit extends Cubit<UserState> {
     try {
       var doctorsResponse = await firestore.collection("doctors").get();
 
-      doctorsData = doctorsResponse.docs.map((e) => e.data()).toList();
+      doctorsData = doctorsResponse.docs
+          .map((e) => {
+                "id": e.id,
+                "address": e.data()["address"],
+                "name": e.data()["name"],
+                "picture": e.data()["picture"],
+                "rate": e.data()["rate"],
+                "specialization": e.data()["specialization"],
+                "type": e.data()["type"],
+              })
+          .toList();
     } catch (e) {
       print(e.toString());
     }

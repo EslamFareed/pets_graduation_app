@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
 import 'package:pets_graduation_app/cubits/user/user_cubit.dart';
+import 'package:pets_graduation_app/screens/doctors/doctor_details_screen.dart';
 
 class DoctorsScreen extends StatelessWidget {
   DoctorsScreen({super.key});
@@ -46,58 +48,71 @@ class DoctorsScreen extends StatelessWidget {
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.all(5),
-                                        height: 100,
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                .5,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                              cubit.doctorsData[index]
-                                                  ["picture"],
+                                return InkWell(
+                                  onTap: () {
+                                    NavigationHelper.goTo(
+                                        context,
+                                        DoctorDetailsScreen(
+                                            doctor: cubit.doctorsData[index]));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.all(5),
+                                          height: 100,
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  .5,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                cubit.doctorsData[index]
+                                                    ["picture"],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          "${cubit.doctorsData[index]["name"]}",
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(
+                                            "${cubit.doctorsData[index]["name"]}",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Row(
-                                          children: [
-                                            const Icon(Icons.star,
-                                                size: 16, color: Colors.yellow),
-                                            Text(cubit.doctorsData[index]
-                                                    ["rate"]
-                                                .toString())
-                                          ],
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.star,
+                                                  size: 16,
+                                                  color: Colors.yellow),
+                                              Text(cubit.doctorsData[index]
+                                                      ["rate"]
+                                                  .toString())
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                            "${cubit.doctorsData[index]["address"]}"),
-                                      ),
-                                    ],
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(
+                                              "${cubit.doctorsData[index]["address"]}"),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
