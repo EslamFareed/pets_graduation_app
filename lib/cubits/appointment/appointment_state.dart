@@ -29,3 +29,10 @@ class LoadingMakeAppointmentsState extends AppointmentState {}
 class ErrorMakeAppointmentsState extends AppointmentState {}
 
 class SuccessMakeAppointmentsState extends AppointmentState {}
+//! ---------------------------------------------------------------
+
+class LoadingGetMyAppointmentsState extends AppointmentState {}
+
+class ErrorGetMyAppointmentsState extends AppointmentState {}
+
+class SuccessGetMyAppointmentsState extends AppointmentState {}

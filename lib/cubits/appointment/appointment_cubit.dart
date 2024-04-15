@@ -93,20 +93,51 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     }
   }
 
-  void makeAppointment(String doctorId) async {
+  void makeAppointment(Map doctor) async {
     emit(LoadingMakeAppointmentsState());
     try {
       await firestore.collection("appointments").add({
         "userId": SharedHelper.getUserId(),
-        "doctorId": doctorId,
+        "doctorId": doctor["id"],
         "day": date,
         "time": chosenTime,
         "type": chooseType,
+        "doctorName": doctor["name"],
+        "done": false,
       });
       emit(SuccessMakeAppointmentsState());
     } catch (e) {
       print(e.toString());
       emit(ErrorMakeAppointmentsState());
+    }
+  }
+
+  List<Map> myAppointments = [];
+
+  void getMyAppointments() async {
+    emit(LoadingGetMyAppointmentsState());
+    try {
+      var response = await firestore
+          .collection("appointments")
+          .where("userId", isEqualTo: SharedHelper.getUserId())
+          .get();
+
+      myAppointments = response.docs
+          .map((e) => {
+                "id": e.id,
+                "userId": e.data()["userId"],
+                "doctorId": e.data()["doctorId"],
+                "day": e.data()["day"],
+                "time": e.data()["time"],
+                "type": e.data()["type"],
+                "doctorName": e.data()["doctorName"],
+                "done": e.data()["done"],
+              })
+          .toList();
+      emit(SuccessGetMyAppointmentsState());
+    } catch (e) {
+      print(e.toString());
+      emit(ErrorGetMyAppointmentsState());
     }
   }
 }

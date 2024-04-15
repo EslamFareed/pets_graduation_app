@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pets_graduation_app/core/local/shared_helper.dart';
 import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
+import 'package:pets_graduation_app/screens/appointments/appointments_screen.dart';
 import 'package:pets_graduation_app/screens/auth/login_screen.dart';
 import 'package:pets_graduation_app/screens/editProfile/edit_profile_screen.dart';
 import 'package:pets_graduation_app/screens/knowledge/knowledge_screen.dart';
@@ -59,6 +60,19 @@ class ProfileScreen extends StatelessWidget {
               onTap: () {},
               title: const Text("Reminders"),
               leading: const Icon(Icons.notifications),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                size: 15,
+              ),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              onTap: () {
+                NavigationHelper.goTo(context, AppointmentsScreen());
+              },
+              title: const Text("Appointments"),
+              leading: const Icon(Icons.calendar_today),
               trailing: const Icon(
                 Icons.arrow_forward_ios,
                 size: 15,
