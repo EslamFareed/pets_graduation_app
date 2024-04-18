@@ -12,6 +12,24 @@ class SharedHelper {
     prefs = await SharedPreferences.getInstance();
   }
 
+  // static List<Map> getReminers() =>
+  //     prefs
+  //         .getStringList(SharedKeys.reminders.name)
+  //         ?.map((e) => jsonDecode(e) as Map)
+  //         .toList() ??
+  //     [];
+
+  // static Future<void> setReminder(Map reminder) async {
+  //   var data = getReminers();
+
+  //   data.add(reminder);
+
+  //   await prefs.setStringList(
+  //       SharedKeys.reminders.name, data.map((e) => jsonEncode(e)).toList());
+  // }
+
+  // static Future<void> removeReminder(Map reminder){}
+
   static bool checkFirstTime() =>
       prefs.getBool(SharedKeys.isFirstTime.name) ?? true;
 
@@ -128,4 +146,5 @@ enum SharedKeys {
   isLogin,
   userId,
   cart,
+  reminders,
 }

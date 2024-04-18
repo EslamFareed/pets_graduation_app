@@ -47,7 +47,7 @@ class PetsCubit extends Cubit<PetsState> {
       final mountainImagesRef = storageRef.child("images/${image!.name}");
 
       try {
-        var response = await mountainImagesRef.putFile(File(image!.path));
+        var response = await mountainImagesRef.putFile(File(image.path));
 
         imageString = await response.ref.getDownloadURL();
 

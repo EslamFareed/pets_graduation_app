@@ -7,6 +7,11 @@ import 'package:pets_graduation_app/screens/editProfile/edit_profile_screen.dart
 import 'package:pets_graduation_app/screens/knowledge/knowledge_screen.dart';
 import 'package:pets_graduation_app/screens/orders/orders_screen.dart';
 import 'package:pets_graduation_app/screens/pets/my_pets_screen.dart';
+import 'package:pets_graduation_app/screens/subscription/subscription_screen.dart';
+
+import '../../core/utils/show_message.dart';
+import '../../cubits/user/user_cubit.dart';
+import '../reminders/reminders_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -57,13 +62,35 @@ class ProfileScreen extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                if (UserCubit.get(context).userData["isVip"]) {
+                  NavigationHelper.goTo(context, RemindersScreen());
+                } else {
+                  ShowMessage.showMessage(
+                      context, "You Must subscribe to VIP ");
+                }
+              },
               title: const Text("Reminders"),
               leading: const Icon(Icons.notifications),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-                size: 15,
-              ),
+              trailing: UserCubit.get(context).userData["isVip"]
+                  ? const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 15,
+                    )
+                  : Container(
+                      width: 100,
+                      height: 25,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.deepPurple,
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "For Vip Users",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
             ),
           ),
           Card(
@@ -86,6 +113,19 @@ class ProfileScreen extends StatelessWidget {
               },
               title: const Text("Knowledge"),
               leading: const Icon(Icons.info_rounded),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                size: 15,
+              ),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              onTap: () {
+                NavigationHelper.goTo(context, SubscriptionScreen());
+              },
+              title: const Text("Subscription"),
+              leading: const Icon(Icons.star),
               trailing: const Icon(
                 Icons.arrow_forward_ios,
                 size: 15,

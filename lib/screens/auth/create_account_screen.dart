@@ -286,6 +286,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         "password": nameController.text,
                                         "phone": phoneController.text,
                                         "picture": imageString,
+                                        "isVip": false,
                                       }).then((value) {
                                         NavigationHelper.goToAndOffAll(
                                             context, MainLayout());

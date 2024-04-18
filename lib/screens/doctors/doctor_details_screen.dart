@@ -82,7 +82,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     Text(widget.doctor["specialization"]),
                     Row(
                       children: [
-                        Text(widget.doctor["rate"]),
+                        Text("${widget.doctor["rate"]}"),
                         const Icon(
                           Icons.star,
                           color: Colors.yellow,

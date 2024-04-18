@@ -1,16 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pets_graduation_app/core/local/shared_helper.dart';
 import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
 import 'package:pets_graduation_app/cubits/main/main_cubit.dart';
 import 'package:pets_graduation_app/cubits/user/user_cubit.dart';
 import 'package:pets_graduation_app/screens/cart/cart_screen.dart';
-import 'package:pets_graduation_app/screens/doctors/doctors_screen.dart';
-import 'package:pets_graduation_app/screens/home/home_screen.dart';
-import 'package:pets_graduation_app/screens/profile/profile_screen.dart';
-
-import '../products/products_screen.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -23,6 +16,7 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   void initState() {
     UserCubit.get(context).getUserData();
+
     super.initState();
   }
 

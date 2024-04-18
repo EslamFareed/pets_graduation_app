@@ -1,17 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
+import 'package:pets_graduation_app/core/utils/show_message.dart';
 import 'package:pets_graduation_app/cubits/main/main_cubit.dart';
 import 'package:pets_graduation_app/cubits/user/user_cubit.dart';
 import 'package:pets_graduation_app/screens/adoption/adoption_screen.dart';
 import 'package:pets_graduation_app/screens/diagnose/diagnose_screen.dart';
 import 'package:pets_graduation_app/screens/pharmacies/pharmacies_screen.dart';
+import 'package:pets_graduation_app/screens/reminders/reminders_screen.dart';
 
 import '../../core/local/shared_helper.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 switch (index) {
                                   case 0:
                                     NavigationHelper.goTo(
-                                        context, DiagnoseScreen());
+                                        context, const DiagnoseScreen());
 
                                     break;
                                   case 1:
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     break;
                                   case 2:
                                     NavigationHelper.goTo(
-                                        context, AdoptionScreen());
+                                        context, const AdoptionScreen());
                                     break;
                                   case 3:
                                     NavigationHelper.goTo(
@@ -96,25 +97,55 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MainCubit.get(context).changeScreen(2);
                                     break;
                                   case 5:
+                                    if (UserCubit.get(context)
+                                        .userData["isVip"]) {
+                                      NavigationHelper.goTo(
+                                          context, const RemindersScreen());
+                                    } else {
+                                      ShowMessage.showMessage(context,
+                                          "You Must subscribe to VIP ");
+                                    }
                                     break;
                                   default:
                                 }
                               },
-                              child: Card(
-                                color: Colors.white,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      icons[index],
-                                      size: 50,
-                                      color: Colors.deepPurpleAccent,
+                              child: index == 5 &&
+                                      !UserCubit.get(context).userData["isVip"]
+                                  ? Banner(
+                                      message: "For Vip Users",
+                                      location: BannerLocation.bottomEnd,
+                                      color: Colors.deepPurple,
+                                      child: Card(
+                                        color: Colors.white,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              icons[index],
+                                              size: 50,
+                                              color: Colors.deepPurpleAccent,
+                                            ),
+                                            Text(names[index]),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : Card(
+                                      color: Colors.white,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Icon(
+                                            icons[index],
+                                            size: 50,
+                                            color: Colors.deepPurpleAccent,
+                                          ),
+                                          Text(names[index])
+                                        ],
+                                      ),
                                     ),
-                                    Text(names[index])
-                                  ],
-                                ),
-                              ),
                             );
                           },
                           itemCount: 6,

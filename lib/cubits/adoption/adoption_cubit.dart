@@ -116,9 +116,11 @@ class AdoptionCubit extends Cubit<AdoptionState> {
   List<Map> filterAnimalsData = [];
 
   void filterAnimals(String cat) {
+    
     filterAnimalsData = animalsData
         .where((element) => element["category"]["id"] == cat)
         .toList();
+    
     emit(SuccessGetAllAnimalsState());
   }
 }
