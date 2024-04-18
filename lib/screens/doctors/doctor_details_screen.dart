@@ -182,7 +182,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       child: MaterialButton(
                         onPressed: () {
                           AppointmentCubit.get(context)
-                              .makeAppointment(widget.doctor);
+                              .makeAppointment(widget.doctor, context);
                         },
                         color: Colors.deepPurple,
                         textColor: Colors.white,

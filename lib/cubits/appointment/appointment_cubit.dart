@@ -1,9 +1,14 @@
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:pets_graduation_app/cubits/user/user_cubit.dart';
 
 import '../../core/local/shared_helper.dart';
+import 'package:intl/intl.dart';
 
 part 'appointment_state.dart';
 
@@ -93,9 +98,40 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     }
   }
 
-  void makeAppointment(Map doctor) async {
+  void makeAppointment(Map doctor, BuildContext context) async {
     emit(LoadingMakeAppointmentsState());
     try {
+      if (UserCubit.get(context).userData["isVip"]) {
+        DateFormat format = DateFormat("yyyy-MM-dd hh:mm aaa");
+        DateTime dateTime = format.parse("$date $chosenTime");
+
+        int count = Alarm.getAlarms().length;
+        await firestore.collection("reminders").add({
+          "userId": SharedHelper.getUserId(),
+          "label": "Appointment with Dr. ${doctor["name"]}",
+          "desc":
+              "Appointment with Dr. ${doctor["name"]} on $date at $chosenTime - $chooseType",
+          "enabled": true,
+          "time": dateTime.subtract(const Duration(hours: 1)).toString(),
+          "count": count + 1,
+        }).then((value) async {
+          final alarmSettings = AlarmSettings(
+            id: count + 1,
+            dateTime: dateTime.subtract(const Duration(hours: 1)),
+            assetAudioPath: 'assets/songs/alarm.mp3',
+            loopAudio: true,
+            vibrate: true,
+            volume: 1.0,
+            fadeDuration: 3.0,
+            notificationTitle: "Appointment with ${doctor["name"]}",
+            notificationBody:
+                "Appointment with ${doctor["name"]} on $date at $chosenTime - $chooseType",
+            enableNotificationOnKill: true,
+          );
+
+          await Alarm.set(alarmSettings: alarmSettings);
+        });
+      }
       await firestore.collection("appointments").add({
         "userId": SharedHelper.getUserId(),
         "doctorId": doctor["id"],
