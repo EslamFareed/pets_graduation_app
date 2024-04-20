@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:pets_graduation_app/core/local/shared_helper.dart';
 
 part 'reminders_state.dart';
 
@@ -18,7 +19,10 @@ class RemindersCubit extends Cubit<RemindersState> {
     emit(LoadingGetRemindersState());
 
     try {
-      var response = await firestore.collection("reminders").get();
+      var response = await firestore
+          .collection("reminders")
+          .where("userId", isEqualTo: SharedHelper.getUserId())
+          .get();
 
       reminders = response.docs
           .map((e) => {

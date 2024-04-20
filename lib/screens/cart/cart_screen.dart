@@ -76,18 +76,21 @@ class _CartScreenState extends State<CartScreen> {
                                 radius: 40,
                               ),
                               const SizedBox(width: 20),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    products[index]["name"],
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                              SizedBox(
+                                width: MediaQuery.sizeOf(context).width * .4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      products[index]["name"],
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Text(products[index]["price"].toString()),
-                                ],
+                                    Text(products[index]["price"].toString()),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

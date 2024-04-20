@@ -260,32 +260,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                           radius: 40,
                                         ),
                                         const SizedBox(width: 20),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              UserCubit.get(context)
-                                                  .productsData[index]["name"],
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
+                                        SizedBox(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  .4,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                UserCubit.get(context)
+                                                        .productsData[index]
+                                                    ["name"],
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              UserCubit.get(context)
-                                                  .productsData[index]["desc"],
-                                              style: const TextStyle(
-                                                fontSize: 15,
+                                              Text(
+                                                UserCubit.get(context)
+                                                        .productsData[index]
+                                                    ["desc"],
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
                                               ),
-                                            ),
-                                            Text(UserCubit.get(context)
-                                                .productsData[index]["price"]
-                                                .toString()),
-                                            Text(UserCubit.get(context)
-                                                    .productsData[index]
-                                                ["category"]),
-                                          ],
+                                              Text(UserCubit.get(context)
+                                                  .productsData[index]["price"]
+                                                  .toString()),
+                                              Text(UserCubit.get(context)
+                                                      .productsData[index]
+                                                  ["category"]),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -299,6 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       icon: const Icon(
                                         Icons.add_shopping_cart,
                                       ),
+                                      iconSize: 24,
                                     ),
                                   ],
                                 ),

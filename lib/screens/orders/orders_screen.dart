@@ -49,7 +49,13 @@ class OrdersScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("name : ${e["name"]}"),
+                                      SizedBox(
+                                          width: 100,
+                                          child: Text(
+                                            "name : ${e["name"]}",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          )),
                                       Text("category : ${e["category"]}"),
                                       Text("Price : ${e["price"]}"),
                                       Text("Quantity : ${e["quantity"]}"),

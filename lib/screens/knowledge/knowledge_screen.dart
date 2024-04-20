@@ -24,6 +24,10 @@ class KnowledgeScreen extends StatelessWidget {
           const Center(
             child: Text("Please Choose One Category"),
           ),
+          const SizedBox(height: 20),
+          const Center(
+            child: Text("How To Deal With"),
+          ),
           const SizedBox(height: 100),
           BlocBuilder<DiagnoseCubit, DiagnoseState>(
             builder: (context, state) {

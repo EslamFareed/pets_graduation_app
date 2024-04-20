@@ -62,31 +62,40 @@ class ProductsScreen extends StatelessWidget {
                                               radius: 40,
                                             ),
                                             const SizedBox(width: 20),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  cubit.productsData[index]
-                                                      ["name"],
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
+                                            SizedBox(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  .4,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    cubit.productsData[index]
+                                                        ["name"],
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  cubit.productsData[index]
-                                                      ["desc"],
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
+                                                  Text(
+                                                    cubit.productsData[index]
+                                                        ["desc"],
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(cubit.productsData[index]
-                                                        ["price"]
-                                                    .toString()),
-                                                Text(cubit.productsData[index]
-                                                    ["category"]),
-                                              ],
+                                                  Text(cubit.productsData[index]
+                                                          ["price"]
+                                                      .toString()),
+                                                  Text(cubit.productsData[index]
+                                                      ["category"]),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
