@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_graduation_app/core/local/shared_helper.dart';
 import 'package:pets_graduation_app/core/utils/navigation_helper.dart';
+import 'package:pets_graduation_app/core/utils/show_message.dart';
+import 'package:pets_graduation_app/screens/cart/check_out_screen.dart';
 
 import 'make_order_screen.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({super.key});
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -14,8 +16,6 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<Map> products = SharedHelper.getCart();
-
-  final firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +27,15 @@ class _CartScreenState extends State<CartScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              try {
-                double total = 0;
-                SharedHelper.getCart().forEach((element) {
-                  total += double.parse(element["price"].toString()) *
-                      int.parse(element["quantity"].toString());
-                });
-
-                firestore.collection("orders").add({
-                  "userId": SharedHelper.getUserId(),
-                  "items": SharedHelper.getCart(),
-                  "total": total.toString(),
-                  "date": DateTime.now().toString(),
-                }).then((value) {
-                  SharedHelper.deleteCart().then((value) {
-                    NavigationHelper.goToAndOffAll(
-                      context,
-                      const MakeOrderScreen(),
-                    );
-                  });
-                });
-              } catch (e) {
-                print(e.toString());
+              if (products.isEmpty) {
+                ShowMessage.showMessage(context, "No Products in cart");
+              } else {
+                NavigationHelper.goTo(
+                  context,
+                  const CheckOutScreen(),
+                );
               }
+             
             },
             icon: const Icon(Icons.shopping_cart_checkout),
           )

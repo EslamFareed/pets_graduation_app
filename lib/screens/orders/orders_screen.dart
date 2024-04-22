@@ -36,6 +36,7 @@ class OrdersScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Total = ${item["total"]}"),
+                            Text("Address : ${item["address"]}"),
                             const Text("Order Details : "),
                             const Divider(),
                             for (var e in item["items"])
