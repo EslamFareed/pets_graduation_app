@@ -216,7 +216,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           ),
           Container(
             width: MediaQuery.sizeOf(context).width,
-            height: 100,
+            height: 150,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(20),
             margin: const EdgeInsets.all(20),
@@ -226,13 +226,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   color: Colors.grey,
                 )),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text("Total Price"),
                     Text("$total"),
+                  ],
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Pay Type"),
+                    Text("Cash"),
                   ],
                 ),
               ],
